@@ -11,9 +11,14 @@ def func1(x):
     out.append(x[1]*x[0] - x[1] - 5)
     return out
 
-def func3(x):
-    out = [x[0]**2 + x[1] + 1]
-    out.append(-1*x[0]**2 -1* x[1] + 10)
+#def func3(x):
+#    out = [x[0]**2 + x[1] + 1]
+#    out.append(-1*x[0]**2 -1* x[1] + 10)
+#    return out
+
+def func3(x,y):
+    out = [y**2 + x + 1]
+    out.append(-1*y**2 -1* x + 10)
     return out
 
 def func4(x, y):
@@ -25,7 +30,12 @@ print(x0)
 x01 = fsolve(func1, [1, 1])
 print(x01)
 
-x02 = fsolve(func3, [1, 1])
+#print('Test for equation system:')
+#x02 = fsolve(func3, [1, 1])
+#print(x02)
+
+print('Test for equation system:')
+x02 = fsolve(func3, 1,1)
 print(x02)
 
 ##crazy stuff i dont understand yet
@@ -37,7 +47,7 @@ print(x02)
 
 #plot func3
 x = np.linspace(0,10,10)
-result = func3(x)
+result = func3([x, x])
 print('Input')
 print(x)
 print('This is the result of equation system:')
