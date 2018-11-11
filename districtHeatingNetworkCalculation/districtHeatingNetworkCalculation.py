@@ -1,54 +1,42 @@
-from scipy.optimize import fsolve
-import numpy as np
+from scipy.optimize import *
+from numpy import *
 import math
 import matplotlib.pyplot as plt
 
-def func(x):
-    return x + 2*math.cos(x)
+#calculation System 2
 
-def func1(x):
-    out = [x[0]*math.cos(x[1]) - 4]
-    out.append(x[1]*x[0] - x[1] - 5)
-    return out
+def pressurePump1(m):
+    a2 = -1
+    a1 = 0.5
+    a0 = 12
 
-#def func3(x):
-#    out = [x[0]**2 + x[1] + 1]
-#    out.append(-1*x[0]**2 -1* x[1] + 10)
-#    return out
+    dp = a2 * m**2 + a1 * m + a0
+    return dp
 
-def func3(x,y):
-    out = [y**2 + x + 1]
-    out.append(-1*y**2 -1* x + 10)
-    return out
+def pressureLoss1(m):
+    b1 = 0.05
 
-def func4(x, y):
-    return np.sin(y * x)
+    dp = b1 * m**2
+    return dp
 
-x0 = fsolve(func, 0.3)
-print(x0)
+def pressureLoss2(m):
+    b2 = 0.08
 
-x01 = fsolve(func1, [1, 1])
-print(x01)
+    dp = b2 * m**2
+    return dp
 
-#print('Test for equation system:')
-#x02 = fsolve(func3, [1, 1])
-#print(x02)
+def equationSystem2(z):
+    m0      = z[0]
+    m1      = z[1]
+    m2      = z[2]
 
-print('Test for equation system:')
-x02 = fsolve(func3, 1,1)
-print(x02)
+    F       = empty(3)
+    F[0]     = pressurePump1(m0) + pressureLoss1(m1)
+    F[1]     = pressureLoss2(m2) - pressureLoss1(m1)
+    F[2]     = m0 - m1 - m2
 
-##crazy stuff i dont understand yet
-#xaxis = np.linspace(0, 4, 10)
-#yaxis = np.linspace(-1, 1, 20)
-#result = func4(xaxis[:,None], yaxis[None,:])
-#print(result)
+    return F
 
-
-#plot func3
-x = np.linspace(0,10,10)
-result = func3([x, x])
-print('Input')
-print(x)
-print('This is the result of equation system:')
+print('Massflows for System1')
+result = fsolve(equationSystem2, [1, 0.5, 0.5])
 print(result)
