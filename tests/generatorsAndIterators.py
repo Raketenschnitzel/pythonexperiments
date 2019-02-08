@@ -48,13 +48,24 @@ class iterator:
         pass       
         
 if __name__ == '__main__':     
-    "First we test a generator function"
+    """
+    Generators are Iterators. You can only iterate over them once. 
+    They can be implemented as function using keyword yield. 
+    Iterators are classes which implement __next__() function
+    You can call next() on them
+    """
     agenerator = generatorfunction(5)
     print(agenerator)
     print(f'A generator function actually is an object: {type(agenerator)}')
-    print(f'It\s also iterable: {int(next(agenerator))}')
-    print(f'It\s also iterable: {int(next(agenerator))}')
-    print(f'Feed it to a list to get the list:{list(agenerator.__iter__())}')
+    print(f'It\'s also iterable: {int(next(agenerator))}')
+    print(f'It\'s also iterable: {int(next(agenerator))}')
+    print(f'Feed it to a list to get the list:{list(agenerator)}')
+    try:
+        print(f'It\s also iterable: {int(next(agenerator))}')
+    except StopIteration: 
+        print("""
+              End of iterator reached. Exception is thrown!
+              """.upper())
     
     "Test Fibonacci"
     order = 1
@@ -72,5 +83,6 @@ if __name__ == '__main__':
     print(f'Print modernFibonacci2 {order:>02}: {list(modernFibonacci2(order))}')
     
     "Test runtime"
-    order = 100000
-    print(f'Print modernFibonacci2 {order:>02}: {sum(modernFibonacci2(order))}')   
+    #order = 100000
+    #print(f'Print modernFibonacci2 {order:>02}: {sum(modernFibonacci2(order))}')  
+    
