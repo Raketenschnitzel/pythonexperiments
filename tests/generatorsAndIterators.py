@@ -1,5 +1,7 @@
 #! /etc/bin/env python3
 
+import random
+
 '''
     Here we test iterators and generators
 '''
@@ -51,7 +53,22 @@ class MyCounter:
     def __next__(self):
         self.temp = self.a
         self.a +=1
-        return self.temp               
+        return self.temp     
+
+class RandomIterable:
+    """
+    Just a demonstrator for Iterables
+    It's kind of rolling a six sided die with 5 x 1 and 1 x StopIteration
+    """
+    def __iter__(self):
+        self.options = ('go', 'go', 'go', 'go', 'go', 'stop')
+        return self
+
+    def __next__(self):
+        if random.choice(self.options) == 'go':
+            return 1
+        else:
+            raise StopIteration                   
         
 if __name__ == '__main__':     
     """
@@ -61,8 +78,7 @@ if __name__ == '__main__':
     You can call next() on them.
     Iterables implement __iter__() function.
     You can call iter() on them. This creates an Iterator.
-    Maybe it\'s best to think about iterable more as a ability of a class to
-    create a Iter Object.
+    An Iterable can implement __next__() itself.
     """
     agenerator = generatorfunction(5)
     print(agenerator)
@@ -98,7 +114,7 @@ if __name__ == '__main__':
     
     """
     Test MyCounter
-    MyCounter is iterable!
+    MyCounter is an Iterable!
     You can create the Iterator by invoking iter()
     The iterator is implements the next() function. 
     """
@@ -109,4 +125,13 @@ if __name__ == '__main__':
     print(next(aIterator))
     print(next(aIterator))
     print(next(aIterator))
+    
+    """
+    Test RandomIterable()
+    Iterables can be passed to for loops
+    """
+    print('Let\'s test the RandomIterable() object in a for loop:')
+    for eggs in RandomIterable():
+        print(eggs, end=', ')
+    print('The for loop is catching the StopIteration exception :)')
     
