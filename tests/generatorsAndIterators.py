@@ -52,8 +52,8 @@ if __name__ == '__main__':
     agenerator = generatorfunction(5)
     print(agenerator)
     print(f'A generator function actually is an object: {type(agenerator)}')
-    print(f'It\s also iterable: {int(agenerator.__next__())}')
-    print(f'It\s also iterable: {int(agenerator.__next__())}')
+    print(f'It\s also iterable: {int(next(agenerator))}')
+    print(f'It\s also iterable: {int(next(agenerator))}')
     print(f'Feed it to a list to get the list:{list(agenerator.__iter__())}')
     
     "Test Fibonacci"
