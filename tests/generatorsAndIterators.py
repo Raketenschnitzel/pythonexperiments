@@ -71,3 +71,6 @@ if __name__ == '__main__':
     order = 10
     print(f'Print modernFibonacci2 {order:>02}: {list(modernFibonacci2(order))}')
     
+    "Test runtime"
+    order = 100000
+    print(f'Print modernFibonacci2 {order:>02}: {sum(modernFibonacci2(order))}')   
