@@ -43,16 +43,26 @@ def fibonacci2(n):
         a, b = b, a + b
     return result    
 
-class iterator:
-    def __next__():
-        pass       
+class MyCounter:
+    def __iter__(self):
+        self.a = 1
+        return self
+    
+    def __next__(self):
+        self.temp = self.a
+        self.a +=1
+        return self.temp               
         
 if __name__ == '__main__':     
     """
     Generators are Iterators. You can only iterate over them once. 
     They can be implemented as function using keyword yield. 
     Iterators are classes which implement __next__() function
-    You can call next() on them
+    You can call next() on them.
+    Iterables implement __iter__() function.
+    You can call iter() on them. This creates an Iterator.
+    Maybe it\'s best to think about iterable more as a ability of a class to
+    create a Iter Object.
     """
     agenerator = generatorfunction(5)
     print(agenerator)
@@ -85,4 +95,18 @@ if __name__ == '__main__':
     "Test runtime"
     #order = 100000
     #print(f'Print modernFibonacci2 {order:>02}: {sum(modernFibonacci2(order))}')  
+    
+    """
+    Test MyCounter
+    MyCounter is iterable!
+    You can create the Iterator by invoking iter()
+    The iterator is implements the next() function. 
+    """
+    
+    aCounter    = MyCounter()
+    aIterator   = iter(aCounter)
+    print(next(aIterator))
+    print(next(aIterator))
+    print(next(aIterator))
+    print(next(aIterator))
     
