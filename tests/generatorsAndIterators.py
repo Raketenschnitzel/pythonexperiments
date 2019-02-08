@@ -59,6 +59,7 @@ class RandomIterable:
     """
     Just a demonstrator for Iterables
     It's kind of rolling a six sided die with 5 x 1 and 1 x StopIteration
+    https://wiki.python.org/moin/Iterator
     """
     def __iter__(self):
         self.options = ('go', 'go', 'go', 'go', 'go', 'stop')
@@ -134,4 +135,7 @@ if __name__ == '__main__':
     for eggs in RandomIterable():
         print(eggs, end=', ')
     print('The for loop is catching the StopIteration exception :)')
+            
+    "They can also be used to construct lists"
+    print(list(RandomIterable()))
     
