@@ -5,16 +5,21 @@
 
 
 class Converter(object):
-
+  """
+  This is an rather complex approach using recursion.
+  I was unable to implement negative Notation like IX
+  using a standard set of values like
+  [1, 5, 10, 50, 100, 500, 1000]
+  ['I', 'V', 'X', 'L', 'C', 'D', 'M']
+  The solution of the exercise used an easier set of values,
+  where negative Notation was already done.
+  """
 
   def __init__(self):
-    self.nums = (1, 5, 10, 50, 100, 500, 1000)
-    self.romes = ('I', 'V', 'X', 'L', 'C', 'D', 'M')
-    self.numsstack = list(self.nums)
-    self.romesstack = list(self.romes)
+
+    self.numsstack = [1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000]
+    self.romesstack = ['I', 'IV', 'V', 'IX', 'X', 'XL', 'L', 'XC', 'C', 'CD', 'D', 'DM', 'M']
     self._representation = ''
-    print(self.numsstack)
-    print(self.romesstack)
 
 
   def popHighestValue(self):
@@ -26,10 +31,9 @@ class Converter(object):
 
   def convertPart(self, amount, sign):
     result = ''
-    if amount < 4:
-        for i in range(amount):
-            result += sign
-    print('convertPart({},{}):{}'.format(amount,sign,result))
+    for i in range(amount):
+        result += sign
+    # print('convertPart({},{}):{}'.format(amount,sign,result))
     return result
 
 
@@ -47,11 +51,6 @@ class Converter(object):
         self._representation += self.convertPart(replace, sign)
         return
     elif rest > 0 and replace == 0:
-        if rest > (maxval - self.numsstack[-1]):
-            self._representation += self.romesstack[-2] + sign
-            self.popHighestValue()
-            self.convertFull(rest - maxval)
-        else:
             self.convertFull(rest)
     elif rest > 0 and replace > 0:
         self._representation += self.convertPart(replace, sign)
