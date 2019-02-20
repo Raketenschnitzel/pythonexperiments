@@ -15,9 +15,12 @@ class Converter(object):
     print(self.romes)
 
 
-  def convertPart(self, amount):
+  def popHighestValue(self):
+    return self.nums.pop(), self.romes.pop()
+
+
+  def convertPart(self, amount, sign):
     result = ''
-    sign = self.romes.pop()
     for i in range(amount):
         result += sign
     print('convertPart:{}'.format(result))
@@ -26,22 +29,19 @@ class Converter(object):
 
   def convertFull(self,number):
     # find char for highest mod
-    maxval = self.nums.pop()
-    # print('Maxval:{}'.format(maxval))
-
-    # find part to replace
+    maxval, sign = self.popHighestValue()
     replace = number//maxval
     rest = number%maxval
     # print('self.representation:{}'.format(self._representation))
     # return or recursion
     if rest == 0 and replace > 0:
-        return self.convertPart(replace)
+        self._representation += self.convertPart(replace, sign)
+        return
     elif rest > 0 and replace == 0:
-        self.romes.pop()
-        return self.convertFull(rest)
+        self.convertFull(rest)
     elif rest > 0 and replace > 0:
-        self._representation += self.convertPart(replace)
-        self._representation += self.convertFull(rest)
+        self._representation += self.convertPart(replace, sign)
+        self.convertFull(rest)
 
     #subtractive notation
     return self._representation
