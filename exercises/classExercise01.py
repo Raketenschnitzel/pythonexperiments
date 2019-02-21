@@ -5,43 +5,56 @@
 
 
 class Converter(object):
-
+  """
+  This is an rather complex approach using recursion.
+  I was unable to implement negative Notation like IX
+  using a standard set of values like
+  [1, 5, 10, 50, 100, 500, 1000]
+  ['I', 'V', 'X', 'L', 'C', 'D', 'M']
+  The solution of the exercise used an easier set of values,
+  where negative Notation was already done.
+  """
 
   def __init__(self):
-    self.nums = [1, 5, 10, 50, 100, 500, 1000]
-    self.romes = ['I', 'V', 'X', 'L', 'C', 'D', 'M']
+
+    self.numsstack = [1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000]
+    self.romesstack = ['I', 'IV', 'V', 'IX', 'X', 'XL', 'L', 'XC', 'C', 'CD', 'D', 'DM', 'M']
     self._representation = ''
-    print(self.nums)
-    print(self.romes)
 
 
-  def convertPart(self, amount):
+  def popHighestValue(self):
+    if len(self.numsstack) > 0 and len(self.romesstack) > 0:
+        return self.numsstack.pop(), self.romesstack.pop()
+    else:
+        return None
+
+
+  def convertPart(self, amount, sign):
     result = ''
-    sign = self.romes.pop()
     for i in range(amount):
         result += sign
-    print('convertPart:{}'.format(result))
+    # print('convertPart({},{}):{}'.format(amount,sign,result))
     return result
 
 
   def convertFull(self,number):
     # find char for highest mod
-    maxval = self.nums.pop()
-    # print('Maxval:{}'.format(maxval))
+    maxval, sign = self.popHighestValue()
+    try:
+        replace = number//maxval
+        rest = number%maxval
+    except:
+        print('Corrupt floor division {}//{}'.format(number, maxval))
 
-    # find part to replace
-    replace = number//maxval
-    rest = number%maxval
-    # print('self.representation:{}'.format(self._representation))
     # return or recursion
     if rest == 0 and replace > 0:
-        return self.convertPart(replace)
+        self._representation += self.convertPart(replace, sign)
+        return
     elif rest > 0 and replace == 0:
-        self.romes.pop()
-        return self.convertFull(rest)
+            self.convertFull(rest)
     elif rest > 0 and replace > 0:
-        self._representation += self.convertPart(replace)
-        self._representation += self.convertFull(rest)
+        self._representation += self.convertPart(replace, sign)
+        self.convertFull(rest)
 
     #subtractive notation
     return self._representation
